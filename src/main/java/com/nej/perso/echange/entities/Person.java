@@ -39,21 +39,21 @@ public class Person {
     private String adress;
 
     @Column(name="type")
-    private String typePerson;
+    private String type;
 
     @Column(name="photo")
     private byte[] photo;
 
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idFather")
     private Person father;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMother")
     private Person mother;
 
     @Column(name="classroom")
-    private byte[] classroom;
+    private String classroom;
 
 }

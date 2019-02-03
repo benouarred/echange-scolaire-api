@@ -35,8 +35,7 @@ public class UserManagerController {
     @CrossOrigin(origins = "http://localhost:4200")
     public @ResponseBody
     Iterable<Person> getAll() {
-        Iterable<Person> all = personRepository.findAll();
-        return all;
+        return personRepository.findAll();
     }
 
     @GetMapping(path = "eleve/{id}")

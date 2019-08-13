@@ -4,24 +4,24 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.nej.perso</groupId>
-	<artifactId>echange</artifactId>
+	<artifactId>scool-exchange-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>echange</name>
-	<description>Demo project for Spring Boot</description>
+	<name>school-exchange-api</name>
+	<description>School exchange api</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.5.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>11</java.version>
+		<java.version>10</java.version>
 		<spring-boot-admin.version>2.0.3</spring-boot-admin.version>
 	</properties>
 

@@ -12,7 +12,7 @@ public class WebServerConfig {
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory>
     webServerFactoryCustomizer() {
-        return factory -> factory.setContextPath("/echange-scolaire/api");
+        return factory -> factory.setContextPath("/school-exchange/api");
     }
 
 }

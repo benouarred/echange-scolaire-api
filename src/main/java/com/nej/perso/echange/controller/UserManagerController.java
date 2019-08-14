@@ -13,6 +13,7 @@ import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController()
 @RequestMapping("/v1/persons")
@@ -21,23 +22,36 @@ public class UserManagerController {
     @Autowired
     PersonRepository personRepository;
 
-    @PostMapping(path = "/students/{studentId}/parents")
+    @PostMapping
+    public ResponseEntity createPerson(@RequestBody Person student){
+        //TODO validate person type: [student, father, mother]
+        student.setUuid(UUID.randomUUID().toString());
+        personRepository.save(student);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(path = "/students/{studentUUID}/parents")
     @Transactional
-    public ResponseEntity setParent(@PathVariable("studentId") String studentId, @RequestBody Person parent){
+    public ResponseEntity setParent(@PathVariable("studentUUID") String studentUuid, @RequestBody Person parent){
         //TODO validate inputs
 
         //FIXME review
-        Person student = personRepository.findById(Integer.valueOf(studentId)).get();
-        Person savedParent = personRepository.save(parent);
+        Person student = personRepository.findByUuid(studentUuid);
+        if(student == null){
+            return ResponseEntity.notFound().build();
+        }
+        parent.setUuid(UUID.randomUUID().toString());
+        Person persistentParent = personRepository.save(parent);
         //TODO create an enum
         String type = parent.getType();
         switch (type){
             case "father":
-                student.setFather(savedParent);
+                student.setFather(persistentParent);
                 break;
 
             case "mother":
-                student.setMother(savedParent);
+                student.setMother(persistentParent);
                 break;
 
             default:
@@ -48,9 +62,17 @@ public class UserManagerController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(path = "/sss")
-    public ResponseEntity createPerson(@RequestBody Person student){
-        //TODO validate person type: [student, father, mother]
+    @PostMapping(path = "/students/{studentUUID}/correspondent")
+    @Transactional
+    public ResponseEntity setCorrespondent(@PathVariable("studentUUID") String studentUuid, @RequestBody Person correspondent){
+        //TODO validate inputs
+        Person student = personRepository.findByUuid(studentUuid);
+        if(student == null){
+            return ResponseEntity.notFound().build();
+        }
+        correspondent.setUuid(UUID.randomUUID().toString());
+        Person persistentCorrespondent = personRepository.save(correspondent);
+        student.setCorrespondent(persistentCorrespondent);
         personRepository.save(student);
 
         return ResponseEntity.ok().build();
@@ -60,7 +82,6 @@ public class UserManagerController {
     public List<Person> getPersons() {
         List<Person> persons = new ArrayList<>();
         personRepository.findAll().forEach(persons::add);
-
         return persons;
     }
 

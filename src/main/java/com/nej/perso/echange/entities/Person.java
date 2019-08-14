@@ -4,9 +4,13 @@ package com.nej.perso.echange.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -18,6 +22,10 @@ public class Person {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @JsonIgnore
     private int id;
+
+
+    @Column(name="uuid")
+    private String uuid;
 
     @Column(name="firstname")
     private String firstname;
@@ -47,6 +55,8 @@ public class Person {
     @Column(name="photo")
     private byte[] photo;
 
+    @Column(name="classroom")
+    private String classroom;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idFather")
@@ -56,7 +66,9 @@ public class Person {
     @JoinColumn(name = "idMother")
     private Person mother;
 
-    @Column(name="classroom")
-    private String classroom;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="idCorrespondent")
+    private Person correspondent;
+
 
 }
